@@ -57,4 +57,24 @@ def test_prediksi_80():
     assert response.status_code == 200
     assert "Lulus" in response.text
     assert "Belum Lulus" not in response.text
+import requests
+
+def uji_prediksi(nilai, hasil_diharapkan):
+    response = requests.get(
+        f"{BASE_URL}/prediksi/{nilai}",
+        timeout=20
+    )
+
+    assert response.status_code == 200, (
+        f"Status tidak sesuai: {response.status_code}"
+    )
+
+    assert hasil_diharapkan.lower() in response.text.lower(), (
+        f"Hasil tidak sesuai: {response.text}"
+    )
+
+    print(f"Tes nilai {nilai}: LULUS")
+
+uji_prediksi(60, "Belum Lulus")
+uji_prediksi(80, "Lulus")
 
