@@ -77,4 +77,14 @@ def uji_prediksi(nilai, hasil_diharapkan):
 
 uji_prediksi(60, "Belum Lulus")
 uji_prediksi(80, "Lulus")
+def test_struktur_json_prediksi():
+    response = requests.get(
+        BASE_URL + "/prediksi/80",
+        timeout=20
+    )
 
+    assert response.status_code == 200
+
+    data = response.json()
+    assert isinstance(data, dict)
+    assert "prediksi" in data
