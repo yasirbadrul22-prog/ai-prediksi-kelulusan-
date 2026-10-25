@@ -27,3 +27,17 @@ def test_prediksi_belum_lulus():
 def test_nilai_di_luar_rentang():
     response = requests.get(BASE_URL + "/prediksi/120", timeout=20)
     assert response.status_code == 400
+
+def test_nilai_minimum():
+    response = requests.get(
+        BASE_URL + "/prediksi/0", timeout=20
+    )
+    assert response.status_code == 200
+
+
+def test_nilai_maksimum():
+    response = requests.get(
+        BASE_URL + "/prediksi/100", timeout=20
+    )
+    assert response.status_code == 200
+
