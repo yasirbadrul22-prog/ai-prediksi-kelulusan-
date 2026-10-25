@@ -40,4 +40,21 @@ def test_nilai_maksimum():
         BASE_URL + "/prediksi/100", timeout=20
     )
     assert response.status_code == 200
+def test_prediksi_60():
+    response = requests.get(
+        BASE_URL + "/prediksi/60",
+        timeout=20
+    )
+    assert response.status_code == 200
+    assert "Belum Lulus" in response.text
+
+
+def test_prediksi_80():
+    response = requests.get(
+        BASE_URL + "/prediksi/80",
+        timeout=20
+    )
+    assert response.status_code == 200
+    assert "Lulus" in response.text
+    assert "Belum Lulus" not in response.text
 
