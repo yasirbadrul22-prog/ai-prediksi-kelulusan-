@@ -25,4 +25,11 @@ jobs:
         env:
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: pytest -v test_api.py
+      - name: Simpan laporan sebagai artefak
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: laporan-pengujian-api
+          path: laporan_hari63.csv
+          if-no-files-found: ignore
 
