@@ -1,4 +1,21 @@
+import os
+import requests
 
+BASE_URL = os.environ["API_BASE_URL"].rstrip("/")
+
+def test_nilai_batas_bawah():
+    response = requests.get(
+        BASE_URL + "/prediksi/0",
+        timeout=20
+    )
+    assert response.status_code == 200
+
+def test_nilai_batas_atas():
+    response = requests.get(
+        BASE_URL + "/prediksi/100",
+        timeout=20
+    )
+    assert response.status_code == 200
 import os
 import requests
 
