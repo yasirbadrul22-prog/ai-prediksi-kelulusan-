@@ -1,4 +1,24 @@
 import os
+import time
+import requests
+
+BASE_URL = os.environ["API_BASE_URL"].rstrip("/")
+
+def test_api_merespons_dalam_batas_waktu():
+    mulai = time.perf_counter()
+
+    response = requests.get(
+        BASE_URL + "/prediksi/80",
+        timeout=20
+    )
+
+    durasi = time.perf_counter() - mulai
+
+    assert response.status_code == 200
+    assert durasi < 10, (
+        f"Respons terlalu lambat: {durasi:.2f} detik"
+    )
+import os
 import requests
 
 BASE_URL = os.environ["API_BASE_URL"].rstrip("/")
