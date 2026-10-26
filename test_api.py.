@@ -1,0 +1,36 @@
+import os
+import re
+import requests
+import pytest
+
+BASE_URL = os.environ.get("API_BASE_URL", "").rstrip("/")
+
+@pytest.mark.parametrize(
+    "nilai, harapan",
+    [
+        (80, "lulus"),
+        (60, "belumlulus"),
+    ]
+)
+def test_prediksi(nilai, harapan):
+    assert BASE_URL, "Secret API_BASE_URL belum diatur"
+
+    response = requests.get(
+        f"{BASE_URL}/prediksi/{nilai}",
+        timeout=20
+    )
+
+    assert 200 <= response.status_code < 300, (
+        f"Status HTTP tidak sukses: {response.status_code}"
+    )
+
+    aktual = re.sub(
+        r"[\s_\"']",
+        "",
+        response.text.lower()
+    )
+
+    assert harapan in aktual, (
+        f"Nilai {nilai}: hasil tidak sesuai. "
+        f"Respons API: {response.text[:200]}"
+    )
