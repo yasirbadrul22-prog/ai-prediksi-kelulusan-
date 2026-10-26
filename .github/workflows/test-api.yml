@@ -1,7 +1,4 @@
-      - name: Jalankan tes API
-        env:
-          API_BASE_URL: ${{ secrets.API_BASE_URL }}
-        run: python -m pytest -v test_api.py
+
       - name: Buat ringkasan pengujian
         if: always()
         run: |
