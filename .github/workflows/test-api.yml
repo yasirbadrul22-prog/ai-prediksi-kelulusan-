@@ -2,6 +2,7 @@ assert "nilai" in data, "Field nilai tidak ditemukan"
 assert "prediksi" in data, "Field prediksi tidak ditemukan"
 
 print("Semua field wajib tersedia!")
+
       - name: Buat ringkasan pengujian
         if: always()
         run: |
