@@ -1,3 +1,63 @@
+import requests
+import csv
+import time
+from datetime import datetime, timezone
+
+BASE_URL = "https://ai-prediksi-kelulusan.vercel.app"
+ENDPOINT = BASE_URL + "/prediksi/80"
+
+JUMLAH_UJI = 5
+catatan = []
+
+for nomor in range(1, JUMLAH_UJI + 1):
+    mulai = time.perf_counter()
+
+    try:
+        response = requests.get(ENDPOINT, timeout=20)
+        durasi = round(time.perf_counter() - mulai, 3)
+
+        catatan.append({
+            "percobaan": nomor,
+            "waktu_utc": datetime.now(timezone.utc).isoformat(),
+            "status_http": response.status_code,
+            "durasi_detik": durasi,
+            "berhasil_http": 200 <= response.status_code < 300,
+            "detail": response.text[:100].replace("\n", " ")
+        })
+
+    except requests.RequestException as error:
+        durasi = round(time.perf_counter() - mulai, 3)
+
+        catatan.append({
+            "percobaan": nomor,
+            "waktu_utc": datetime.now(timezone.utc).isoformat(),
+            "status_http": "",
+            "durasi_detik": durasi,
+            "berhasil_http": False,
+            "detail": str(error)[:100]
+        })
+
+total = len(catatan)
+berhasil = sum(1 for item in catatan if item["berhasil_http"])
+gagal = total - berhasil
+persen = round(berhasil / total * 100, 1) if total else 0
+
+print("=== Ringkasan Pemantauan API ===")
+print("Total permintaan:", total)
+print("Respons HTTP sukses:", berhasil)
+print("Gagal atau non-2xx:", gagal)
+print("Tingkat keberhasilan HTTP:", persen, "%")
+
+with open("laporan_hari65.csv", "w", newline="", encoding="utf-8") as file:
+    kolom = [
+        "percobaan", "waktu_utc", "status_http",
+        "durasi_detik", "berhasil_http", "detail"
+    ]
+    writer = csv.DictWriter(file, fieldnames=kolom)
+    writer.writeheader()
+    writer.writerows(catatan)
+
+print("File laporan tersimpan: laporan_hari65.csv")
 import os
 import time
 import requests
