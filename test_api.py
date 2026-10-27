@@ -1,14 +1,4 @@
-import os
-import requests
 
-API_BASE_URL = os.getenv("API_BASE_URL")
-
-def test_api_berjalan():
-    assert API_BASE_URL, "API_BASE_URL belum diatur"
-
-    response = requests.get(API_BASE_URL, timeout=20)
-
-    assert response.status_code == 200
 import requests
 import csv
 import time
@@ -196,3 +186,14 @@ def test_struktur_json_prediksi():
     data = response.json()
     assert isinstance(data, dict)
     assert "prediksi" in data
+import os
+import requests
+
+API_BASE_URL = os.getenv("API_BASE_URL")
+
+def test_api_berjalan():
+    assert API_BASE_URL, "API_BASE_URL belum diatur"
+
+    response = requests.get(API_BASE_URL, timeout=20)
+
+    assert response.status_code == 200
