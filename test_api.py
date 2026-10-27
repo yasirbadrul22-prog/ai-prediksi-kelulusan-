@@ -197,3 +197,7 @@ def test_api_berjalan():
     response = requests.get(API_BASE_URL, timeout=20)
 
     assert response.status_code == 200
+- name: Jalankan tes API
+  env:
+    API_BASE_URL: ${{ secrets.API_BASE_URL }}
+  run: pytest -v
