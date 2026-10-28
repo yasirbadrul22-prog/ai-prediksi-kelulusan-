@@ -1,3 +1,4 @@
+
 name: Test API
 
 on:
@@ -23,62 +24,4 @@ jobs:
         env:
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: python -m pytest -v
-
-      - name: Buat ringkasan pengujian
-        if: always()
-        run: |
-          mkdir -p reports
-          python - <<'PY'
-          import json
-          from datetime import datetime, timezone
-
-          laporan = {
-              "waktu_utc": datetime.now(timezone.utc).isoformat(),
-              "catatan": "Lihat hasil langkah pengujian sebelumnya.",
-              "status_job": "${{ job.status }}"
-          }
-
-          with open("reports/ringkasan.json", "w") as f:
-              json.dump(laporan, f, indent=2)
-          PY
-
-      - name: Simpan ringkasan sebagai artefak
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: laporan-hari66
-          path: reports/ringkasan.json
-name: Test API AI
-
-on:
-  push:
-  pull_request:
-
-jobs:
-  test-api:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Ambil kode
-        uses: actions/checkout@v4
-
-      - name: Siapkan Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install library
-        run: pip install pytest requests
-
-      - name: Jalankan tes API
-        env:
-          API_BASE_URL: ${{ secrets.API_BASE_URL }}
-        run: pytest -v test_api.py
-      - name: Simpan laporan sebagai artefak
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: laporan-pengujian-api
-          path: laporan_hari63.csv
-          if-no-files-found: ignore
-
+        
