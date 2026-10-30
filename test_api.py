@@ -50,3 +50,25 @@ def test_nilai_satu_di_bawah_batas():
     assert response.status_code == 200
     assert response.json()["prediksi"] == "Belum Lulus"
 
+def test_health_check():
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "healthy"
+
+
+def test_prediksi_v1():
+    response = client.get("/v1/prediksi/80")
+
+    assert response.status_code == 200
+    assert response.json()["prediksi"] == "Lulus"
+    assert response.json()["version"] == "1.0.0"
+
+
+def test_endpoint_lama():
+    response = client.get("/prediksi/80")
+
+    assert response.status_code == 200
+    assert response.json()["prediksi"] == "Lulus"
+
+
