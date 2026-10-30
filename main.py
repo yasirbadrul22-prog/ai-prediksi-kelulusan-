@@ -1,13 +1,24 @@
+
 from fastapi import FastAPI, HTTPException
 
-app = FastAPI(title="AI Prediksi Kelulusan")
+app = FastAPI(title="AI Prediksi Kelulusan", version="1.0.0")
+
 
 @app.get("/")
 def home():
     return {"status": "API aktif"}
 
-@app.get("/prediksi/{nilai}")
-def prediksi(nilai: int):
+
+@app.get("/health")
+def health():
+    return {
+        "status": "healthy",
+        "version": "1.0.0"
+    }
+
+
+@app.get("/v1/prediksi/{nilai}")
+def prediksi_v1(nilai: int):
     if not 0 <= nilai <= 100:
         raise HTTPException(
             status_code=400,
@@ -16,5 +27,12 @@ def prediksi(nilai: int):
 
     return {
         "nilai": nilai,
-        "prediksi": "Lulus" if nilai >= 75 else "Belum Lulus"
+        "prediksi": "Lulus" if nilai >= 75 else "Belum Lulus",
+        "version": "1.0.0"
     }
+
+
+# Endpoint lama tetap dipertahankan
+@app.get("/prediksi/{nilai}")
+def prediksi_lama(nilai: int):
+    return prediksi_v1(nilai)
