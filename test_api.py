@@ -36,3 +36,17 @@ def test_nilai_batas_atas():
 def test_nilai_di_luar_rentang():
     response = client.get("/prediksi/120")
     assert response.status_code == 400
+
+def test_nilai_tepat_batas_lulus():
+    response = client.get("/prediksi/75")
+
+    assert response.status_code == 200
+    assert response.json()["prediksi"] == "Lulus"
+
+
+def test_nilai_satu_di_bawah_batas():
+    response = client.get("/prediksi/74")
+
+    assert response.status_code == 200
+    assert response.json()["prediksi"] == "Belum Lulus"
+
