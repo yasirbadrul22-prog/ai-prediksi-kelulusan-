@@ -14,3 +14,18 @@ def test_api_berjalan():
     )
 
     assert response.status_code == 200
+import requests
+
+BASE_URL = "https://ai-prediksi-kelulusan.vercel.app/"
+
+def test_nilai_batas_bawah():
+    response = requests.get(f"{BASE_URL}/prediksi/0")
+    assert response.status_code == 200
+
+def test_nilai_batas_atas():
+    response = requests.get(f"{BASE_URL}/prediksi/100")
+    assert response.status_code == 200
+
+def test_nilai_di_luar_rentang():
+    response = requests.get(f"{BASE_URL}/prediksi/120")
+    assert response.status_code in (400, 422)
