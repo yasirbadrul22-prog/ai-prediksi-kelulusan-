@@ -24,4 +24,6 @@ jobs:
         env:
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: python -m pytest -v
+      - name: Run API tests with coverage
+        run: python -m pytest --cov=main --cov-report=term-missing -v
         
