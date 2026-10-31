@@ -96,4 +96,34 @@ def test_respons_prediksi_nilai_60():
     assert response.status_code == 200
     assert data["prediksi"] == "Belum Lulus"
 
+def test_error_nilai_di_bawah_batas():
+    response = client.get("/v1/prediksi/-1")
+
+    assert response.status_code == 400
+    data = response.json()
+
+    assert data["error"] == "Request Error"
+    assert data["status_code"] == 400
+
+
+def test_error_nilai_di_atas_batas():
+    response = client.get("/v1/prediksi/101")
+
+    assert response.status_code == 400
+    data = response.json()
+
+    assert data["error"] == "Request Error"
+    assert data["status_code"] == 400
+
+
+def test_error_endpoint_tidak_ditemukan():
+    response = client.get("/alamat-tidak-ada")
+
+    assert response.status_code == 404
+    data = response.json()
+
+    assert data["error"] == "Request Error"
+    assert data["status_code"] == 404
+
+
 
