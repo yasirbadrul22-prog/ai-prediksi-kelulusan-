@@ -73,3 +73,4 @@ def prediksi_lama(nilai: int):
     return proses_prediksi(nilai)
 from starlette.exceptions import HTTPException as StarletteHTTPException
 @app.exception_handler(StarletteHTTPException)
+@app.exception_handler(HTTPException)
