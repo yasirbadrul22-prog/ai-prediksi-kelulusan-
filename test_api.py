@@ -70,5 +70,30 @@ def test_endpoint_lama():
 
     assert response.status_code == 200
     assert response.json()["prediksi"] == "Lulus"
+def test_struktur_respons_prediksi():
+    response = client.get("/v1/prediksi/80")
+    data = response.json()
+
+    assert response.status_code == 200
+    assert "nilai" in data
+    assert "prediksi" in data
+    assert "version" in data
+
+
+def test_tipe_data_respons_prediksi():
+    response = client.get("/v1/prediksi/80")
+    data = response.json()
+
+    assert isinstance(data["nilai"], int)
+    assert isinstance(data["prediksi"], str)
+    assert isinstance(data["version"], str)
+
+
+def test_respons_prediksi_nilai_60():
+    response = client.get("/v1/prediksi/60")
+    data = response.json()
+
+    assert response.status_code == 200
+    assert data["prediksi"] == "Belum Lulus"
 
 
