@@ -80,6 +80,4 @@ async def custom_http_exception(request: Request, exc: StarletteHTTPException):
 @app.get("/prediksi/{nilai}")
 def prediksi_lama(nilai: int):
     return proses_prediksi(nilai)
-from starlette.exceptions import HTTPException as StarletteHTTPException
-@app.exception_handler(StarletteHTTPException)
 
