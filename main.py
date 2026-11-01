@@ -77,7 +77,19 @@ async def custom_http_exception(request: Request, exc: StarletteHTTPException):
             "status_code": exc.status_code
         }
     )
-
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(
+    request: Request,
+    exc: RequestValidationError
+):
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": "Validation Error",
+            "detail": "Input tidak valid. Nilai harus berupa angka.",
+            "status_code": 422
+        }
+    )
 @app.get("/prediksi/{nilai}")
 def prediksi_lama(nilai: int):
     return proses_prediksi(nilai)
