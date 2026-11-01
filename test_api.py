@@ -124,6 +124,14 @@ def test_error_endpoint_tidak_ditemukan():
 
     assert data["error"] == "Request Error"
     assert data["status_code"] == 404
+def test_input_huruf_ditolak():
+    response = client.get("/v1/prediksi/abc")
+
+    assert response.status_code == 422
+
+    data = response.json()
+    assert data["error"] == "Validation Error"
+    assert data["status_code"] == 422
 
 
 
