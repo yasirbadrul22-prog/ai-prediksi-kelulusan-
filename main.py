@@ -1,4 +1,4 @@
- 
+from starlette.exceptions import HTTPException as StarletteHTTPException 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
