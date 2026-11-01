@@ -66,7 +66,16 @@ def proses_prediksi(nilai: int):
 )
 def prediksi_v1(nilai: int):
     return proses_prediksi(nilai)
-
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception(request: Request, exc: StarletteHTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": "Request Error",
+            "detail": str(exc.detail),
+            "status_code": exc.status_code
+        }
+    )
 
 @app.get("/prediksi/{nilai}")
 def prediksi_lama(nilai: int):
