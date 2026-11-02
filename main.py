@@ -1,3 +1,4 @@
+import logging
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException 
 from fastapi import FastAPI, HTTPException, Request
@@ -8,7 +9,12 @@ app = FastAPI(
     title="AI Prediksi Kelulusan",
     version="1.0.0"
 )
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(levelname)s:%(name)s:%(message)s"
+)
 
+logger = logging.getLogger("api_ml")
 
 class PrediksiResponse(BaseModel):
     nilai: int
