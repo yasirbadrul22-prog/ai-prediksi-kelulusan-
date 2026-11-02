@@ -155,5 +155,16 @@ def test_cors_diizinkan():
 
     assert response.status_code == 200
     assert response.headers["access-control-allow-origin"] == origin
+def test_prediksi_v2():
+    response = client.get("/v2/prediksi/80")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["nilai"] == 80
+    assert data["prediksi"] == "Lulus"
+    assert data["version"] == "2.0.0"
+    assert "pesan" in data
 
 
