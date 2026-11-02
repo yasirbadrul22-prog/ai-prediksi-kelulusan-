@@ -95,7 +95,7 @@ async def validation_exception_handler(
     exc: RequestValidationError
 ):
 
-logger.warning("Input tidak valid diterima")
+
 
     return JSONResponse(
         status_code=422,
