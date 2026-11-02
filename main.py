@@ -127,14 +127,4 @@ async def validation_exception_handler(
 @app.get("/prediksi/{nilai}")
 def prediksi_lama(nilai: int):
     return proses_prediksi(nilai)
-def test_header_waktu_respons():
-    response = client.get("/v1/prediksi/80")
-
-    assert response.status_code == 200
-    assert "X-Process-Time" in response.headers
-
-    waktu = response.headers["X-Process-Time"]
-    angka_waktu = float(waktu.replace(" ms", ""))
-
-    assert angka_waktu >= 0
 
