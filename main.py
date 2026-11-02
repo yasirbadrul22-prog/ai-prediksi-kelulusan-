@@ -10,6 +10,25 @@ app = FastAPI(
     title="AI Prediksi Kelulusan",
     version="1.0.0"
 )
+@app.middleware("http")
+async def monitor_performa(request: Request, call_next):
+    mulai = time.perf_counter()
+
+    response = await call_next(request)
+
+    durasi = (time.perf_counter() - mulai) * 1000
+
+    logger.info(
+        "Method=%s Path=%s Status=%s Durasi=%.2f ms",
+        request.method,
+        request.url.path,
+        response.status_code,
+        durasi
+    )
+
+    response.headers["X-Process-Time"] = f"{durasi:.2f} ms"
+
+    return response
 logging.basicConfig(
     level=logging.INFO,
     format="%(levelname)s:%(name)s:%(message)s"
