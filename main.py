@@ -1,3 +1,4 @@
+from fastapi import APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 import time
 import logging
