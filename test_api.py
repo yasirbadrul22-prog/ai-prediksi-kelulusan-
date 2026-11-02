@@ -171,4 +171,14 @@ def test_endpoint_lama_masih_berfungsi():
 
     assert response.status_code == 200
     assert response.json()["prediksi"] == "Lulus"
+def test_dokumentasi_api():
+    response = client.get("/openapi.json")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["info"]["title"] == "AI Prediksi Kelulusan"
+    assert data["info"]["version"] == "2.0.0"
+    assert "/v2/prediksi/{nilai}" in data["paths"]
 
