@@ -32,7 +32,12 @@ router_v2 = APIRouter(
     tags=["Prediksi V2"]
 )
 
-@router_v2.get("/prediksi/{nilai}")
+@router_v2.get(
+    "/prediksi/{nilai}",
+    summary="Prediksi kelulusan V2",
+    description="Memprediksi kelulusan berdasarkan nilai siswa.",
+    response_description="Hasil prediksi kelulusan siswa."
+)
 def prediksi_v2(nilai: int):
     hasil = proses_prediksi(nilai)
 
