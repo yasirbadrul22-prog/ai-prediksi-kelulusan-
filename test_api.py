@@ -166,5 +166,9 @@ def test_prediksi_v2():
     assert data["prediksi"] == "Lulus"
     assert data["version"] == "2.0.0"
     assert "pesan" in data
+def test_endpoint_lama_masih_berfungsi():
+    response = client.get("/prediksi/80")
 
+    assert response.status_code == 200
+    assert response.json()["prediksi"] == "Lulus"
 
