@@ -11,6 +11,15 @@ app = FastAPI(
     title="AI Prediksi Kelulusan",
     version="1.0.0"
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://nama-frontend-kamu.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
 @app.middleware("http")
 async def monitor_performa(request: Request, call_next):
     mulai = time.perf_counter()
