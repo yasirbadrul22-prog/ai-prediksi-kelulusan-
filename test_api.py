@@ -132,6 +132,16 @@ def test_input_huruf_ditolak():
     data = response.json()
     assert data["error"] == "Validation Error"
     assert data["status_code"] == 422
+def test_header_waktu_respons():
+    response = client.get("/v1/prediksi/80")
+
+    assert response.status_code == 200
+    assert "X-Process-Time" in response.headers
+
+    waktu = response.headers["X-Process-Time"]
+    angka_waktu = float(waktu.replace(" ms", ""))
+
+    assert angka_waktu >= 0
 
 
 
