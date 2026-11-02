@@ -1,3 +1,4 @@
+from fastapi.middleware.cors import CORSMiddleware
 import time
 import logging
 from fastapi.exceptions import RequestValidationError
