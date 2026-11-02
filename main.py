@@ -152,7 +152,11 @@ async def validation_exception_handler(
             "status_code": 422
         }
     )
-@app.get("/prediksi/{nilai}")
+@app.get(
+    "/prediksi/{nilai}",
+    deprecated=True,
+    summary="Prediksi versi lama",
+    description="Endpoint lama. Gunakan /v2/prediksi/{nilai}."
+)
 def prediksi_lama(nilai: int):
     return proses_prediksi(nilai)
-
