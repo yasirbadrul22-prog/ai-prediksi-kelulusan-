@@ -142,6 +142,18 @@ def test_header_waktu_respons():
     angka_waktu = float(waktu.replace(" ms", ""))
 
     assert angka_waktu >= 0
+def test_cors_diizinkan():
+    origin = "https://ai-prediksi-kelulusan.vercel.app/"
 
+    response = client.options(
+        "/v1/prediksi/80",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "GET"
+        }
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == origin
 
 
