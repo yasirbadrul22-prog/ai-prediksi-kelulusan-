@@ -14,7 +14,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://nama-frontend-kamu.vercel.app"
+        "https://ai-prediksi-kelulusan.vercel.app/"
     ],
     allow_credentials=True,
     allow_methods=["GET"],
