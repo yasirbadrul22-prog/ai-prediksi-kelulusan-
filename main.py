@@ -54,17 +54,23 @@ def health():
 
 
 def proses_prediksi(nilai: int):
+    logger.info("Permintaan prediksi diterima")
+
     if not 0 <= nilai <= 100:
+        logger.warning("Nilai di luar batas: %s", nilai)
         raise HTTPException(
             status_code=400,
             detail="Nilai harus antara 0 dan 100"
         )
 
-    return {
+    hasil = {
         "nilai": nilai,
         "prediksi": "Lulus" if nilai >= 75 else "Belum Lulus",
         "version": "1.0.0"
     }
+
+    logger.info("Prediksi berhasil diproses")
+    return hasil
 
 
 @app.get(
