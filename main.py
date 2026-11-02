@@ -10,7 +10,22 @@ from pydantic import BaseModel
 
 app = FastAPI(
     title="AI Prediksi Kelulusan",
-    version="1.0.0"
+    summary="API untuk memprediksi status kelulusan siswa",
+    description="""
+    # AI Prediksi Kelulusan
+
+    API ini digunakan untuk memprediksi status kelulusan
+    berdasarkan nilai siswa.
+
+    ## Aturan Prediksi
+    - Nilai 75 sampai 100: Lulus
+    - Nilai 0 sampai 74: Belum Lulus
+
+    ## Versi API
+    - V1: Versi sebelumnya
+    - V2: Versi terbaru
+    """,
+    version="2.0.0"
 )
 router_v2 = APIRouter(
     prefix="/v2",
