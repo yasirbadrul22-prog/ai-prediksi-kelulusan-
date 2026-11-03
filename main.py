@@ -53,6 +53,17 @@ router_v2 = APIRouter(
         }
     }
 )
+def prediksi_v2(nilai: int):
+    hasil = proses_prediksi(nilai)
+    return {
+        "nilai": hasil["nilai"],
+        "prediksi": hasil["prediksi"],
+        "version": "2.0.0",
+        "pesan": "Menggunakan API versi terbaru"
+    }
+
+app.include_router(router_v2)
+                        
 
 app.include_router(router_v2)
 app.add_middleware(
