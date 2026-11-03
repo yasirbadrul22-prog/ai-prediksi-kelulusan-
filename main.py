@@ -36,17 +36,23 @@ router_v2 = APIRouter(
     "/prediksi/{nilai}",
     summary="Prediksi kelulusan V2",
     description="Memprediksi kelulusan berdasarkan nilai siswa.",
-    response_description="Hasil prediksi kelulusan siswa."
-)
-def prediksi_v2(nilai: int):
-    hasil = proses_prediksi(nilai)
-
-    return {
-        "nilai": hasil["nilai"],
-        "prediksi": hasil["prediksi"],
-        "version": "2.0.0",
-        "pesan": "Menggunakan API versi terbaru"
+    response_description="Hasil prediksi kelulusan siswa.",
+    responses={
+        200: {
+            "description": "Prediksi berhasil",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "nilai": 80,
+                        "prediksi": "Lulus",
+                        "version": "2.0.0",
+                        "pesan": "Menggunakan API versi terbaru"
+                    }
+                }
+            }
+        }
     }
+)
 
 app.include_router(router_v2)
 app.add_middleware(
