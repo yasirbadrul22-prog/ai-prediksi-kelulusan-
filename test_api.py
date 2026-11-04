@@ -181,4 +181,20 @@ def test_dokumentasi_api():
     assert data["info"]["title"] == "AI Prediksi Kelulusan"
     assert data["info"]["version"] == "2.0.0"
     assert "/v2/prediksi/{nilai}" in data["paths"]
+def test_kontrak_response_v2():
+    response = client.get("/v2/prediksi/80")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["nilai"] == 80
+    assert data["prediksi"] == "Lulus"
+    assert data["version"] == "2.0.0"
+    assert data["pesan"] == "Menggunakan API versi terbaru"
+
+    assert isinstance(data["nilai"], int)
+    assert isinstance(data["prediksi"], str)
+    assert isinstance(data["version"], str)
+    assert isinstance(data["pesan"], str)
 
