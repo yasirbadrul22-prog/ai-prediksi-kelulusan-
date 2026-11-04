@@ -27,6 +27,15 @@ app = FastAPI(
     """,
     version="2.0.0"
 )
+@app.get("/model-info")
+def model_info():
+    return {
+        "model_name": "AI Prediksi Kelulusan",
+        "model_version": "1.0.0",
+        "method": "rule_based_threshold",
+        "threshold": 75,
+        "description": "Nilai >= 75 dinyatakan Lulus"
+    }
 router_v2 = APIRouter(
     prefix="/v2",
     tags=["Prediksi V2"]
