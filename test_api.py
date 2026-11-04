@@ -197,4 +197,15 @@ def test_kontrak_response_v2():
     assert isinstance(data["prediksi"], str)
     assert isinstance(data["version"], str)
     assert isinstance(data["pesan"], str)
+def test_model_info():
+    response = client.get("/model-info")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["model_name"] == "AI Prediksi Kelulusan"
+    assert data["model_version"] == "1.0.0"
+    assert data["method"] == "rule_based_threshold"
+    assert data["threshold"] == 75
 
